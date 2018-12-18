@@ -68,7 +68,7 @@ class _CameraPage extends State<MyCameraPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Camera example'),
+        title: const Text('Camera Page'),
       ),
       body: Column(
         children: <Widget>[
@@ -195,7 +195,7 @@ class _CameraPage extends State<MyCameraPage> {
   Widget _cameraTogglesRowWidget() {
     final List<Widget> toggles = <Widget>[];
 
-    if (cameras.isEmpty) {
+    if (!_isReady) {      //cameras.isEmpty
       return const Text('No camera found');
     } else {
       for (CameraDescription cameraDescription in cameras) {
