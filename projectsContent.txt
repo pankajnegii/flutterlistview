@@ -1,0 +1,30 @@
+-drawee
+-listview
+-opening another page from drawee
+-swipe to refresh
+-use http
+-decode json data
+-tabs
+-alert
+-toast		//bgcolor not filling whole box : issue fixed in updated library(package of fluttertoast)
+-snakebar
+-drawee header: profile image, user name , email, secondary account
+-save classes in another dart file and then import them in main dart file and vice-versa
+-drawer header color change,
+-appbar color change
+-login screen with circular image logo(No methods)
+-to use string and color stored in another dart file (like 'strings.xml' or 'color.xml') via functions.
+-Notification status bar color to transparent while using Listview as  drawer
+-login screen password , show and hide password with icon click
+-display value of textformfield i.e. password using controller (on login button click)
+-use of expanded
+-use of container
+-use of row and column
+-use of future/async/await 			//use when needs to run parellel thread
+-Email and Password save and retrived using 'Shared preferences'.
+-theme, changing app bar color of whole app
+-ListBuilder just like recyclerview on on MyListBuilderPage
+-Aimated Bottom Bar using plugin by Deven Joshi
+
+------------TODO-------keyboard hide when not in focus(login page)---------------Done now-----------
+
