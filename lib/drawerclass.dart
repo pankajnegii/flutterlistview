@@ -4,6 +4,8 @@ import 'main.dart ';
 import 'values.dart';
 import 'listbuilderpage.dart';
 import 'savingobject.dart';
+import 'bottombar.dart';
+
 class MyDrawer extends StatelessWidget {
   static const String _AccountName = 'Pankaj Negi';
   static const String _AccountEmail = 'test@examples.com';
@@ -132,6 +134,17 @@ class MyDrawer extends StatelessWidget {
                       MySavingObject()));
             },
           ),
+          ListTile(
+            leading: Icon(Icons.tablet),
+            title: Text('Bottom Navigation'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyBottomBar()));
+            },
+          ),
+
         ],
       ),
     );

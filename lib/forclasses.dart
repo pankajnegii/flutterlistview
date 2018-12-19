@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'main.dart';
-import 'drawerclass.dart';
-import 'values.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/services.dart';            //to hide keyboard when clicked outside
+
+import 'drawerclass.dart';
+import 'main.dart';
+import 'values.dart'; //to hide keyboard when clicked outside
 // decode json data
 
 
@@ -38,6 +40,7 @@ class FavoratePage extends StatelessWidget {
           ),
           Image.asset('assets/images1.png'),
         ],),
+
     );
   }
 }
@@ -158,7 +161,8 @@ class BikeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(child: Text(
-        "Bike tab is clicked " , style: TextStyle(color: themeColor()),)); // we can also return the whole layout page here
+      "Bike tab is clicked ", style: TextStyle(
+        color: themeColor()),)); // we can also return the whole layout page here
   }
 
 /* getSharedPreferences();
@@ -189,7 +193,8 @@ class RunTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(child: Text(
-        "Run tab is clicked " , style: TextStyle(color: themeColor()),)); // we can also return the whole layout page here
+      "Run tab is clicked ", style: TextStyle(
+        color: themeColor()),)); // we can also return the whole layout page here
   }
 }
 
@@ -200,7 +205,8 @@ class CarTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(child: Text(
-        "Car tab is clicked " , style: TextStyle(color: themeColor()),)); // we can also return the whole layout page here
+      "Car tab is clicked ", style: TextStyle(
+        color: themeColor()),)); // we can also return the whole layout page here
   }
 }
 
@@ -216,16 +222,18 @@ class MyLoginPage extends StatefulWidget {
 class _LoginPage extends State<MyLoginPage> {
 
   bool _obscureText = true;
-  bool _isSignUpButtonCLicked = false;
- // String _password = "";
-  final TextEditingController controllerPassword = new TextEditingController(text: '87654321');       // way to get value of textformfield
-  final TextEditingController controllerEmail = new TextEditingController(text: 'test@examples.com');
+  //bool _isSignUpButtonCLicked = false;
+
+  // String _password = "";
+  final TextEditingController controllerPassword = new TextEditingController(
+      text: '87654321'); // way to get value of textformfield
+  final TextEditingController controllerEmail = new TextEditingController(
+      text: 'test@examples.com');
+
   //SharedPreferences pref = await SharedPreferences.getInstance();
 
 
-
   Widget build(BuildContext context) {
-
     //Something new here
     final logo = Center( //Center is also used to be able to change the container size irrespective of other childs.
         child: Container(
@@ -253,11 +261,11 @@ class _LoginPage extends State<MyLoginPage> {
         hintText: 'Email',
         //labelText: 'Email',
         //enabledBorder: ,
-        focusedBorder: OutlineInputBorder(        //if focused
-            borderRadius: BorderRadius.circular(32.0),
+        focusedBorder: OutlineInputBorder( //if focused
+          borderRadius: BorderRadius.circular(32.0),
           borderSide: BorderSide(color: themeColor(), width: 1.0),
         ),
-        enabledBorder:  OutlineInputBorder(
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(32.0),
           borderSide: BorderSide(color: themeColor(), width: 1.0),
         ),
@@ -283,10 +291,10 @@ class _LoginPage extends State<MyLoginPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            flex: 6,                    //to adjust size
+            flex: 6, //to adjust size
             child: new TextFormField(
               //autofocus: false,
-             // onFieldSubmitted: focusNode.unfocus(),
+              // onFieldSubmitted: focusNode.unfocus(),
               textAlign: TextAlign.left,
               controller: controllerPassword,
               style: TextStyle(color: themeColor()),
@@ -303,7 +311,8 @@ class _LoginPage extends State<MyLoginPage> {
           ),
           Expanded(
               flex: 1,
-              child: new IconButton(icon: Icon(Icons.remove_red_eye, color: _obscureText ? Colors.grey : themeColor() ),
+              child: new IconButton(icon: Icon(Icons.remove_red_eye,
+                  color: _obscureText ? Colors.grey : themeColor()),
                 onPressed: _toggle,
                 padding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
               )
@@ -377,10 +386,10 @@ class _LoginPage extends State<MyLoginPage> {
         child: Text('Log In', style: TextStyle(color: Colors.white)),
         onPressed: () {
           //toast for testing
-         //_showToast(controllerPassword.text);
-          SystemChannels.textInput.invokeMethod('TextInput.hide');    //to hide keyboard when clicked outside
+          //_showToast(controllerPassword.text);
+          SystemChannels.textInput.invokeMethod(
+              'TextInput.hide'); //to hide keyboard when clicked outside
           _checkLoginSuccess();
-
         },
         shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0),),
@@ -410,7 +419,8 @@ class _LoginPage extends State<MyLoginPage> {
     //
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,    //to avoid page resizing when keyboard opens
+      resizeToAvoidBottomPadding: false,
+      //to avoid page resizing when keyboard opens
       drawer: MyDrawer(),
       appBar: AppBar(
         //backgroundColor: appBarColor(),
@@ -418,9 +428,10 @@ class _LoginPage extends State<MyLoginPage> {
       ),
       body: GestureDetector(
         onTap: () {
-          SystemChannels.textInput.invokeMethod('TextInput.hide');    //to hide keyboard when clicked outside
+          SystemChannels.textInput.invokeMethod(
+              'TextInput.hide'); //to hide keyboard when clicked outside
         },
-        child:  Center(
+        child: Center(
           child: ListView(
             shrinkWrap: true,
             padding: EdgeInsets.only(left: 24.0, right: 24.0),
@@ -440,33 +451,32 @@ class _LoginPage extends State<MyLoginPage> {
         ),
       ),
     );
-
   }
+
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
     });
   }
 
-  void _checkLoginSuccess() async{
+  void _checkLoginSuccess() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    if(controllerEmail.text == pref.get('email') && controllerPassword.text == pref.get('password')){
+    if (controllerEmail.text == pref.get('email') &&
+        controllerPassword.text == pref.get('password')) {
       _showToast("Successfully Login");
       Navigator.pop(context);
       //The MaterialPageRoute is handy because it transitions to the new screen using a platform-specific animation.
       Navigator.push(context, MaterialPageRoute(
           builder: (context) =>
               MyHomePage(
-                  title : 'Basic List')));
-
+                  title: 'Basic List')));
     }
     else {
       _showToast("Some Login Issue");
     }
-
   }
 
-  void _showToast(String text){
+  void _showToast(String text) {
     Fluttertoast.showToast(
       msg: "Result : " + text,
       toastLength: Toast.LENGTH_SHORT,
@@ -477,44 +487,76 @@ class _LoginPage extends State<MyLoginPage> {
     );
   }
 
-  void _showSignUpPage(){
-
+ /* void _showSignUpPage() {
     //Make rest of the login widgets visibility gone.
 
 
-
-  }
+  }*/
 }
 
 //----------------  Refresh List Page ----------------------
 
+// Better method than Tab/Bike/ car classes as only one class need to be defined here and by changing parameter to constructer data can be changed.
 class SwipeToRefreshList extends StatefulWidget {
   @override
   _SwipeToRefreshListState createState() => new _SwipeToRefreshListState();
 }
 
 class _SwipeToRefreshListState extends State<SwipeToRefreshList> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    MyPlaceholderWidget(Colors.red),
+    MyPlaceholderWidget(Colors.yellow),
+    MyPlaceholderWidget(Colors.green)
+  ];
   int _count = 1;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
   new GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       drawer: MyDrawer(),
       appBar: AppBar(
-       // backgroundColor: appBarColor(),
+        // backgroundColor: appBarColor(),
         title: Text("Swipe To Refresh List Page"),
       ),
-      body: new RefreshIndicator(
-          child:  new ListView(
-            children:_getItems(),
+      body:
+      _children[_currentIndex],
+      /*new RefreshIndicator(
+          child: new ListView(
+            children: _getItems(),
           ),
-          onRefresh: _handleRefresh)
+          onRefresh: _handleRefresh),*/
+
+      bottomNavigationBar: BottomNavigationBar(
+          onTap: onTabTapped,
+          currentIndex:  _currentIndex,
+        items: [
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
+          ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.mail),
+            title: Text('Messages'),
+          ),
+          new BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text('Profile')
+          )
+        ],
+      ),
 
     );
   }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   List<Widget> _getItems() {
     var items = <Widget>[];
     for (int i = _count; i < _count + 15; i++) {
@@ -544,4 +586,19 @@ class _SwipeToRefreshListState extends State<SwipeToRefreshList> {
     return null;
   }
 
+}
+
+//Classes for BottomNavigationBar children widget list
+class MyPlaceholderWidget extends StatelessWidget {
+
+  final Color color;
+
+  MyPlaceholderWidget(this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+    );
+  }
 }
