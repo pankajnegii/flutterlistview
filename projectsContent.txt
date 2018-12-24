@@ -25,7 +25,7 @@
 -theme, changing app bar color of whole app
 -ListBuilder just like recyclerview on on MyListBuilderPage
 -Aimated Bottom Bar using plugin by Deven Joshi
--Bottom Navigation bar changing whole body layout.
+-Bottom Navigation bar changing whole body layout.		(BottomBar.dart)
 
 ------------TODO-------keyboard hide when not in focus(login page)---------------Done now-----------
 
