@@ -5,6 +5,7 @@ import 'values.dart';
 import 'animatedtab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CameraPage.dart';
+import 'FlareAnimation.dart';
 
 void main() => runApp(new MyApp());
 
@@ -69,7 +70,12 @@ class MyHomePage extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.games),
-            title: Text('Games'),
+            title: Text('Animations'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyFlareAnimation()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.tablet),

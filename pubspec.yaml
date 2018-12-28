@@ -20,6 +20,7 @@ dependencies:
   http: ^0.11.3+17
   flutter:
     sdk: flutter
+  flare_flutter: 1.0.2
   fluttertoast: ^2.1.1
   shared_preferences: ^0.4.2
   # The following adds the Cupertino Icons font to your application.
@@ -55,6 +56,12 @@ flutter:
   - assets/images1.png
   - assets/DP.png
   - assets/
+  - assets/Pj.flr
+  - assets/Pj2.flr
+  - assets/landscape.flr
+  - assets/rocket.flr
+  - assets/Star.flr
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 
