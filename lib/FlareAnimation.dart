@@ -15,7 +15,7 @@ class MyFlareAnimation extends StatefulWidget {
 class _FlareAnimation extends State<MyFlareAnimation> {
 
   String _animations = "Build and Fade Out";      //Must : for first animation
-  Animations anim ;
+  bool animation2ButtonClicked = false;
   int _currentIndex = 0;
   List<Animations> anime = new List<Animations>();
    /*List<Widget> _children = [
@@ -61,7 +61,8 @@ class _FlareAnimation extends State<MyFlareAnimation> {
                   fontSize: 30.0),),
               onPressed: () {
                 setState(() {
-                  _animations = anime[_currentIndex]._animationType1;
+                  //_animations = anime[_currentIndex]._animationType1;
+                  animation2ButtonClicked = false;
                 });
               },
             ),
@@ -80,7 +81,8 @@ class _FlareAnimation extends State<MyFlareAnimation> {
                 fontSize: 30.0),),
             onPressed: () {
               setState(() {
-                _animations = anime[_currentIndex]._animationType2;
+                //_animations = anime[_currentIndex]._animationType2;
+                animation2ButtonClicked = true;
               });
             },
 
@@ -89,7 +91,7 @@ class _FlareAnimation extends State<MyFlareAnimation> {
       ),
 
       body:
-      MyPlaceholderWidget(anime[_currentIndex]._animation , _animations),
+      MyPlaceholderWidget(anime[_currentIndex]._animation , animation2ButtonClicked ? anime[_currentIndex]._animationType2 : anime[_currentIndex]._animationType1),
 
       /*FlareActor(
         "assets/Pj2.flr",
