@@ -14,18 +14,27 @@ class MyFlareAnimation extends StatefulWidget {
 
 class _FlareAnimation extends State<MyFlareAnimation> {
 
-  String _animations = "Build and Fade Out";
+  String _animations = "Build and Fade Out";      //Must : for first animation
+  Animations anim ;
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    MyPlaceholderWidget(Colors.red),
-    MyPlaceholderWidget(Colors.yellow),
-    MyPlaceholderWidget(Colors.green)
-  ];
+  List<Animations> anime = new List<Animations>();
+   /*List<Widget> _children = [
+    MyPlaceholderWidget(anime[0]),
+    MyPlaceholderWidget(anime[1]),
+    MyPlaceholderWidget(anime[2])
+  ];*/
+
+
+   _FlareAnimation(){
+     anime.add(new Animations("assets/Pj2.flr", "Build and Fade Out", "Build"));
+     anime.add(new Animations("assets/Pj2.flr", "Build and Fade Out", "Build"));
+     anime.add(new Animations("assets/Pj2.flr", "Build and Fade Out", "Build"));
+   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: Complete with bottom tabs
-
+    //_listBuilder();
     return Scaffold(
       drawer: MyDrawer(),
       appBar: AppBar(
@@ -52,7 +61,7 @@ class _FlareAnimation extends State<MyFlareAnimation> {
                   fontSize: 30.0),),
               onPressed: () {
                 setState(() {
-                  _animations = "Build";
+                  _animations = anime[_currentIndex]._animationType1;
                 });
               },
             ),
@@ -71,7 +80,7 @@ class _FlareAnimation extends State<MyFlareAnimation> {
                 fontSize: 30.0),),
             onPressed: () {
               setState(() {
-                _animations = "Build";
+                _animations = anime[_currentIndex]._animationType2;
               });
             },
 
@@ -80,11 +89,63 @@ class _FlareAnimation extends State<MyFlareAnimation> {
       ),
 
       body:
-      FlareActor(
+      MyPlaceholderWidget(anime[_currentIndex]._animation , _animations),
+
+      /*FlareActor(
         "assets/Pj2.flr",
         animation: _animations,
+      ),*/
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped,
+        currentIndex: _currentIndex,
+        items: [
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
+          ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.mail),
+            title: Text('Messages'),
+          ),
+          new BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text('Profile')
+          )
+        ],
       ),
+    );
+  }
 
+//------------------Methods-------------------
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  /*void _listBuilder() {
+
+    anime.add(new Animations("assets/Pj2.flr", "Build and Fade Out", "Build"));
+    anime.add(new Animations("assets/Pj2.flr", "Build and Fade Out", "Build"));
+    anime.add(new Animations("assets/Pj2.flr", "Build and Fade Out", "Build"));
+
+  }*/
+}
+
+//Classes for BottomNavigationBar children widget list
+class MyPlaceholderWidget extends StatelessWidget {
+
+  String animations, _animationType1;
+  MyPlaceholderWidget(this.animations , this._animationType1);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      child: new FlareActor(
+        animations,
+        animation: _animationType1,
+      ),
     );
   }
 
@@ -92,18 +153,9 @@ class _FlareAnimation extends State<MyFlareAnimation> {
 
 }
 
-//Classes for BottomNavigationBar children widget list
-class MyPlaceholderWidget extends StatelessWidget {
+class Animations {
+  String _animation, _animationType1 ,_animationType2;
+  Animations(this._animation, this._animationType1 , this._animationType2);
 
-  final Color color;
-
-  MyPlaceholderWidget(this.color);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: color,
-    );
-  }
 }
 
