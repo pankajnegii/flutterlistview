@@ -13,6 +13,8 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
+  audioplayers: ^0.7.8
+  file_picker: ^1.1.1
   path_provider: ^0.4.1
   video_player: ^0.5.2
   camera: ^0.2.6
@@ -56,8 +58,8 @@ flutter:
   - assets/images1.png
   - assets/DP.png
   - assets/
-  - assets/Pj.flr
   - assets/Pj2.flr
+  - assets/Dancer.flr
   - assets/landscape.flr
   - assets/rocket.flr
   - assets/Star.flr

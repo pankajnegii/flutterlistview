@@ -5,6 +5,7 @@ import 'values.dart';
 import 'animatedtab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'CameraPage.dart';
+import 'filemanager.dart';
 import 'FlareAnimation.dart';
 
 void main() => runApp(new MyApp());
@@ -61,8 +62,13 @@ class MyHomePage extends StatelessWidget {
             title: Text('Map'),
           ),
           ListTile(
-            leading: Icon(Icons.access_alarm),
-            title: Text('Alarm'),
+            leading: Icon(Icons.sd_storage),
+            title: Text('File Manager'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyFileManager()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.add_a_photo),

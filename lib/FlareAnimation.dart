@@ -33,7 +33,7 @@ class _FlareAnimation extends State<MyFlareAnimation> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Complete with bottom tabs
+    // TODO: Complete with bottom tabs as animations of other shows error
     //_listBuilder();
     return Scaffold(
       drawer: MyDrawer(),
