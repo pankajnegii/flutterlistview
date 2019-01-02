@@ -2,15 +2,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'drawerclass.dart';
-import 'values.dart';
-import 'dart:async';
-import 'dart:io';
-
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
-
-//Help : https://pub.dartlang.org/packages/file_picker
-//Help : https://pub.dartlang.org/packages/audioplayers#-example-tab-
 
 class MyFileManager extends StatefulWidget {
   @override
@@ -21,20 +12,6 @@ class MyFileManager extends StatefulWidget {
 
 class _FileManager extends State<MyFileManager> {
   String _filePath;
-
-  void getFilePath() async {
-    try {
-      String filePath = await FilePicker.getFilePath(type: FileType.ANY);
-      if (filePath == '') {
-        return;
-      }
-      print("File path: " + filePath);
-      setState(()
-      {this._filePath = filePath;});
-    } catch (e) {
-      print("Error while picking the file: " + e.toString());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +37,20 @@ class _FileManager extends State<MyFileManager> {
   }
 
 //------------------Methods-------------------
+
+  void getFilePath() async {
+    try {
+      String filePath = await FilePicker.getFilePath(type: FileType.ANY);
+      if (filePath == '') {
+        return;
+      }
+      print("File path: " + filePath);
+      setState(()
+      {this._filePath = filePath;});
+    } catch (e) {
+      print("Error while picking the file: " + e.toString());
+    }
+  }
 
 }
 

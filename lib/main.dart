@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'CameraPage.dart';
 import 'filemanager.dart';
 import 'FlareAnimation.dart';
+import 'audioplayer.dart';
+import 'videoplayer.dart';
 
 void main() => runApp(new MyApp());
 
@@ -58,8 +60,22 @@ class MyHomePage extends StatelessWidget {
             onTap: _saveSharedPreferences,
           ),
           ListTile(
-            leading: Icon(Icons.map),
-            title: Text('Map'),
+            leading: Icon(Icons.audiotrack),
+            title: Text('Play Audio'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyAudioPlayer()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.music_video),
+            title: Text('Play Video'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyVideoPlayer()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.sd_storage),
