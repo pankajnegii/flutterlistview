@@ -32,6 +32,7 @@
 -Animation using flutter flare 	(FlareAnimation.dart)	Help : https://medium.com/flutter-community/flare-integration-in-flutter-1149618a6127
 -Open file manager and show path of any file  (filemanager.dart)
 -Select and play audio file			(audioplayer.dart)
+-Play video files , local and network		(videoplayer.dart)
 
 
 
