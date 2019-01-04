@@ -338,3 +338,29 @@ class Post {
     );
   }
 }
+
+/*
+
+POST http://uscreen.io/api/v1/sessions http/1.1
+01-04 18:01:13.586 2074-2317/tv.megamace.android D/OkHttp: Content-Type: application/json; charset=UTF-8
+01-04 18:01:13.586 2074-2317/tv.megamace.android D/OkHttp: Content-Length: 52
+01-04 18:01:13.586 2074-2317/tv.megamace.android D/OkHttp: Accept: application/json
+01-04 18:01:13.586 2074-2317/tv.megamace.android D/OkHttp: Accept-Language:
+01-04 18:01:13.586 2074-2317/tv.megamace.android D/OkHttp: x-store-token: DK/Ml+cOGvUFyQ==
+01-04 18:01:13.587 2074-2317/tv.megamace.android D/OkHttp: {"password":"87654321","email":"pnkjng88@gmail.com"}
+01-04 18:01:13.587 2074-2317/tv.megamace.android D/OkHttp: --> END POST (52-byte body)
+01-04 18:01:14.166 2074-2317/tv.megamace.android D/OkHttp: <-- 201 Created http://uscreen.io/api/v1/sessions (578ms)
+01-04 18:01:14.166 2074-2317/tv.megamace.android D/OkHttp: Server: nginx/1.10.3 (Ubuntu)
+01-04 18:01:14.166 2074-2317/tv.megamace.android D/OkHttp: Date: Fri, 04 Jan 2019 12:31:14 GMT
+01-04 18:01:14.166 2074-2317/tv.megamace.android D/OkHttp: Content-Type: application/json; charset=utf-8
+01-04 18:01:14.166 2074-2317/tv.megamace.android D/OkHttp: Transfer-Encoding: chunked
+01-04 18:01:14.167 2074-2317/tv.megamace.android D/OkHttp: Connection: keep-alive
+01-04 18:01:14.167 2074-2317/tv.megamace.android D/OkHttp: X-Frame-Options: ALLOWALL
+01-04 18:01:14.167 2074-2317/tv.megamace.android D/OkHttp: Vary: Origin
+01-04 18:01:14.167 2074-2317/tv.megamace.android D/OkHttp: Etag: W/"3447ac5a8716fe43bb0986bae18211c9"
+01-04 18:01:14.167 2074-2317/tv.megamace.android D/OkHttp: Cache-Control: max-age=0, private, must-revalidate
+01-04 18:01:14.167 2074-2317/tv.megamace.android D/OkHttp: X-Request-Id: ba005a59-4f3b-44af-925c-53cd23aa371c
+01-04 18:01:14.167 2074-2317/tv.megamace.android D/OkHttp: X-Runtime: 0.165470
+01-04 18:01:14.167 2074-2317/tv.megamace.android D/OkHttp: Via: 1.1 vegur
+01-04 18:01:14.173 2074-2317/tv.megamace.android D/OkHttp: {"user":{"id":1008760,"name":"Pankaj negi","email":"pnkjng88@gmail.com","avatar_url":null,"custom_fields":[],"subscribed":false},"auth":{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NzgxNDEwNzQsInN1YiI6MTAwODc2MH0.C8Pe-zxzROChHKP4HXxezHilK7RyDcQL9z4OWNeB7LA"}}
+01-04 18:01:14.173 2074-2317/tv.megamace.android D/OkHttp: <-- END HTTP (273-byte body)*/
