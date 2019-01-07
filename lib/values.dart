@@ -26,9 +26,12 @@ Color buttonColor() {
   return themeColor();
 }
 
+Color containerColor(){
+  return Color(0xFF000000);
+}
 
 Color editTextColor(){
-  return Color(0xFFFFFFFF);
+  return Color(0xFF000000);
 }
 Color hintColor(){
   return Color(0xFFD2D4D3);

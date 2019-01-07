@@ -6,6 +6,7 @@ import 'listbuilderpage.dart';
 import 'savingobject.dart';
 import 'bottombar.dart';
 import 'loginapi.dart';
+import 'uscreelogin.dart';
 
 class MyDrawer extends StatelessWidget {
   static const String _AccountName = 'Pankaj Negi';
@@ -123,6 +124,16 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(
                   builder: (context) =>
                       MyLoginPageAPI()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.email),
+            title: Text('Uscreen Login'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyUscreenLogin()));
             },
           ),
           ListTile(

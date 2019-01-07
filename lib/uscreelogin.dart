@@ -9,25 +9,29 @@ import 'main.dart';
 import 'values.dart';
 
 
-class MyLoginPageAPI extends StatefulWidget {
+class MyUscreenLogin extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _LoginPageAPI();
+    return _UscreenLogin();
   }
 }
 
-class _LoginPageAPI extends State<MyLoginPageAPI> {
+class _UscreenLogin extends State<MyUscreenLogin> {
 
   bool _obscureText = true;
   bool tryLogin = false;
+  bool createNewAccount = false;
   Categories categories = new Categories();
   User userDetails  = new User(username: 'DefaultName' , email: 'DefaultEmail' , token: 'DefaultToken');
   // String _password = "";
   final TextEditingController controllerPassword = new TextEditingController(
-      text: '87654321'); // way to get/set value of textformfield
+      /*text: '87654321'*/); // way to get/set value of textformfield
   final TextEditingController controllerEmail = new TextEditingController(
-      text: 'pnkjng88@gmail.com');
-
+      /*text: 'pnkjng88@gmail.com'*/);
+  final TextEditingController controllerUserName = new TextEditingController(
+    /*text: 'Pankaj Negi'*/);
+  final TextEditingController controllerConfirmPassword = new TextEditingController(
+    /*text: 'pnkjng88@gmail.com'*/);
   //SharedPreferences pref = await SharedPreferences.getInstance();
 
 
@@ -35,57 +39,69 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
     //Something new here
     final logo = Center( //Center is also used to be able to change the container size irrespective of other childs.
         child: Container(
-            margin: EdgeInsets.only(bottom: 100.0),
-            width: 100.0,
-            height: 100.0,
+            margin: EdgeInsets.all(20.0),
+
+            height: 200.0,
             decoration: new BoxDecoration(
               /*shape: BoxShape.rectangle,
                 border: Border.all(
                     color: themeColor(), width: 1.0, style: BorderStyle.solid),*/
                 image: new DecorationImage(
                   fit: BoxFit.fill,
-                  image: new AssetImage('assets/icon_mario.png'),
+                  image: new AssetImage('assets/logo.png'),
                 )
             )
         )
     );
 
-    final email = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      //autofocus: false,
-      controller: controllerEmail,
-      style: TextStyle(color: editTextColor(), fontSize: 15.0),
-      //initialValue: 'test@examples.com',
-      decoration: new InputDecoration(
-        prefixIcon: Icon(Icons.email, color: Colors.white,),
-        hintStyle: TextStyle(color: hintColor()),
-        hintText: 'UserName',
-        //labelText: 'Email',
-        //enabledBorder: ,
-        focusedBorder: OutlineInputBorder( //if focused
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide: BorderSide(color: boxBorder(), width: 1.0),
+    final userName = new Container(
+
+      height: 45.0,
+      color: Colors.white,
+
+      child: new TextFormField(
+        keyboardType: TextInputType.text,
+        controller: controllerUserName,
+        style: TextStyle(color: editTextColor(), fontSize: 15.0),
+        decoration: new InputDecoration(
+          prefixIcon: Icon(Icons.email, color: Colors.grey,),
+          hintStyle: TextStyle(color: hintColor()),
+          //hintText: 'UserName',
+          labelText: 'Email',
+          labelStyle: TextStyle(color: buttonColor()),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          border: InputBorder.none,
+          // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide: BorderSide(color: boxBorder(), width: 1.0),
+      ),
+    );
+
+    final email = new Container(
+
+      height: 45.0,
+      color: Colors.white,
+
+      child: new TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        controller: controllerEmail,
+        style: TextStyle(color: editTextColor(), fontSize: 15.0),
+        decoration: new InputDecoration(
+          prefixIcon: Icon(Icons.email, color: Colors.grey,),
+          hintStyle: TextStyle(color: hintColor()),
+          //hintText: 'UserName',
+          labelText: 'Email',
+          labelStyle: TextStyle(color: buttonColor()),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          border: InputBorder.none,
+          // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
         ),
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0),),
       ),
     );
 
     final password = new Container(
 
       height: 45.0,
-      decoration: new BoxDecoration(
-        border: new Border.all(
-            color: boxBorder(),
-            width: 1.0,
-            style: BorderStyle.solid
-        ),
-        borderRadius: new BorderRadius.all(new Radius.circular(5.0)),
-      ),
+     color: Colors.white,
 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,18 +109,15 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
           Expanded(
             flex: 6, //to adjust size
             child: new TextFormField(
-              //autofocus: false,
-              // onFieldSubmitted: focusNode.unfocus(),
               textAlign: TextAlign.left,
               controller: controllerPassword,
               style: TextStyle(color: editTextColor(), fontSize: 15.0),
-              // validator: (val) => val.length < 6 ? 'Password too short.' : null,
-              // onSaved: (val) => _password = val,
               obscureText: _obscureText,
               decoration: new InputDecoration(
-                prefixIcon: Icon(Icons.vpn_key, color: Colors.white,),
+                prefixIcon: Icon(Icons.vpn_key, color: Colors.grey,),
                 hintStyle: TextStyle(color: hintColor()),
-                hintText: 'Password',
+                labelText: 'Password',
+                labelStyle: TextStyle(color: buttonColor()),
                 contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                 border: InputBorder.none,
                 // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
@@ -114,7 +127,48 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
           Expanded(
               flex: 1,
               child: new IconButton(
-                icon: _obscureText ? Icon(Icons.visibility_off) : Icon(
+                icon: _obscureText ? Icon(Icons.visibility_off ,color: Colors.grey,) : Icon(
+                    Icons.visibility,
+                    color: boxBorder()),
+                onPressed: _toggle,
+                padding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
+              )
+          ),
+        ],
+
+      ),
+    );
+
+    final confirmPassword = new Container(
+
+      height: 45.0,
+      color: Colors.white,
+
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            flex: 6, //to adjust size
+            child: new TextFormField(
+              textAlign: TextAlign.left,
+              controller: controllerConfirmPassword,
+              style: TextStyle(color: editTextColor(), fontSize: 15.0),
+              obscureText: _obscureText,
+              decoration: new InputDecoration(
+                prefixIcon: Icon(Icons.vpn_key, color: Colors.grey,),
+                hintStyle: TextStyle(color: hintColor()),
+                labelText: 'Password',
+                labelStyle: TextStyle(color: buttonColor()),
+                contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                border: InputBorder.none,
+                // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
+              ),
+            ),
+          ),
+          Expanded(
+              flex: 1,
+              child: new IconButton(
+                icon: _obscureText ? Icon(Icons.visibility_off ,color: Colors.grey,) : Icon(
                     Icons.visibility,
                     color: boxBorder()),
                 onPressed: _toggle,
@@ -127,29 +181,12 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
     );
 
     final loginButton = new RaisedButton(
-      shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(5.0),),
       color: buttonColor(),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-            height: 45.0,
+      child:
+      Padding(
+        padding: EdgeInsets.all(12.0),
+        child:   Text('Sign In', style: TextStyle(color: Colors.white, fontSize: 16.0),),
 
-            ///padding: EdgeInsets.only(top: 5.0),
-            //color: Colors.red,            //IMP : just to check textbox size for alignment issue.
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //to place text and icon at start and End of row.
-              children: <Widget>[
-                Text('Login',
-                  style: TextStyle(color: Colors.white, fontSize: 16.0),
-                  textAlign: TextAlign.left,),
-                Icon(Icons.arrow_forward, color: Colors.white,)
-              ],
-            )
-
-
-        ),
       ),
       // On login click
       onPressed: () {
@@ -169,20 +206,48 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
         child: new FlatButton(
           child: Text(
             'Forgot Password?', style: TextStyle(color: Colors.white),),
-          onPressed: () {},
+          onPressed: () {
+            _showToast('Not done yet');
+          },
         )
     );
 
     final loginApiCallOrProgressBar =
     Center (
-    child:
-    SizedBox( height: 35.0,
-      child:
-      tryLogin? CircularProgressIndicator(strokeWidth: 3.0, backgroundColor: buttonColor(),) :  new Container()
-    )
+        child:
+        SizedBox( height: 35.0,
+            child:
+            tryLogin? CircularProgressIndicator(strokeWidth: 3.0, backgroundColor: buttonColor(),) :  new Container()
+        )
 
     ) ;
 
+    final signUpButton = new RaisedButton(
+
+      color: buttonColor(),
+      child:
+      Padding(
+          padding: EdgeInsets.all(12.0),
+          child:   Text('Create New Account', style: TextStyle(color: Colors.white, fontSize: 16.0),),
+
+      ),
+
+      onPressed: () {
+        SystemChannels.textInput.invokeMethod(
+            'TextInput.hide'); //to hide keyboard when clicked outside
+        _showToast('Not done yet');
+      },
+
+    );
+
+    final signUpContainer = createNewAccount ? new Column(
+      children: <Widget>[
+        userName,
+        email,
+        password,
+        confirmPassword,
+      ],
+    ) : new Container();
     //
 
     return Scaffold(
@@ -190,33 +255,30 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
       //to avoid page resizing when keyboard opens
       body: GestureDetector(
           onTap: () {
+
             SystemChannels.textInput.invokeMethod(
                 'TextInput.hide'); //to hide keyboard when clicked outside
           },
           child: new Container(
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage("assets/bg.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
+            color: containerColor(),
             child: Center(
-                child:
-                ListView(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 24.0, right: 24.0 ,top: 50),
-                  children: <Widget>[
-                    logo,
-                    email,
-                    SizedBox(height: 8.0),
-                    password,
-                    SizedBox(height: 8.0),
-                    loginButton,
-                    SizedBox(height: 8.0),
-                    forgotLabel,
-                    loginApiCallOrProgressBar,
-                  ],
-                ),
+              child:
+              ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.only(left: 24.0, right: 24.0 ,top: 50),
+                children: <Widget>[
+                  logo,
+                  email,
+                  password,
+                  SizedBox(height: 16.0),
+                  loginButton,
+                  SizedBox(height: 8.0),
+                  signUpButton,
+                  SizedBox(height: 8.0),
+                  forgotLabel,
+                  loginApiCallOrProgressBar,
+                ],
+              ),
 
             ), //
           )
@@ -275,12 +337,11 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
       print(userDetails.username + ' , ' + userDetails.email  + ' , ' + userDetails.token);
 
       //Test
-      getCatogories();
+      //getCatogories();
 
-      /* Navigator.push(context, MaterialPageRoute(
+       Navigator.push(context, MaterialPageRoute(
           builder: (context) =>
               MyHomePage(title: 'From API Login',)));
-     */
     } else {
       // If that response was not OK, throw an error.
       print(response.toString());
@@ -300,14 +361,14 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
     final categoriesResponse = await http.get('http://uscreen.io/api/v1/categories' , headers: {'x-store-token' : 'DK/Ml+cOGvUFyQ=='} );
     print(categoriesResponse.body);
     if(categoriesResponse.statusCode == 200)
-      {
-        final responseJson = json.decode(categoriesResponse.body);
-        print("Get Successfully");
-        var list = responseJson as List;
-        print(list.runtimeType);
-        List<Categories> categoryList = list.map((i) => Categories.fromJson(i)).toList();
-        //Categories.fromJson(responseJson);
-      } else {
+    {
+      final responseJson = json.decode(categoriesResponse.body);
+      print("Get Successfully");
+      var list = responseJson as List;
+      print(list.runtimeType);
+      List<Categories> categoryList = list.map((i) => Categories.fromJson(i)).toList();
+      //Categories.fromJson(responseJson);
+    } else {
       // If that response was not OK, throw an error.
       print(categoriesResponse.toString());
       print('Failed to load post');
@@ -333,6 +394,17 @@ class User {
     _username = json['user']['name'];
     _email = json['user']['email'];
     _token = json['auth']['token'];
+
+    //Test
+    Fluttertoast.showToast(
+      msg: "Result : " + _username,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIos: 1,
+      backgroundColor: Color(0xFFFF0000),
+      textColor: Colors.white,
+    );
+
     return User(username: _username ,email: _email , token: _token);
 
   }
