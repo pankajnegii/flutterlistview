@@ -240,6 +240,13 @@ class _UscreenLogin extends State<MyUscreenLogin> {
 
     );
 
+    final signInContainer = !createNewAccount ? new Column(
+      children: <Widget>[
+        email,
+        password,
+      ],
+    ) : new Container();
+
     final signUpContainer = createNewAccount ? new Column(
       children: <Widget>[
         userName,
