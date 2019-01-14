@@ -7,12 +7,29 @@ import 'savingobject.dart';
 import 'bottombar.dart';
 import 'loginapi.dart';
 import 'uscreelogin.dart';
+import 'home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatelessWidget {
+
+  bool alreadyLogin =false;
+  String _accountName = "";
+  String _accountEmail = "";
+
   static const String _AccountName = 'Pankaj Negi';
   static const String _AccountEmail = 'test@examples.com';
+
+  @override
+  MyDrawer(){
+    //checkSharedPreferences();
+    setDetails();
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
+    //checkSharedPreferences(context);
 
     return Drawer(
       child: ListView(
@@ -26,8 +43,8 @@ class MyDrawer extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 color: drawerHeaderColor(),
               ),
-              accountName: const Text(_AccountName),
-              accountEmail: const Text(_AccountEmail),
+              accountName: Text(_accountName),
+              accountEmail: Text(_accountEmail),
               currentAccountPicture: new Container( //for circular image
                   width: 190.0,
                   height: 190.0,
@@ -73,6 +90,38 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(
                   builder: (context) =>
                       TabBarPage()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.power_settings_new),
+            title: Text('Logout'),
+            onTap: () {
+              //Navigator.pop(context);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return new AlertDialog(
+                      title: new Text('Are you sure?'),
+                      content: new Text('You will be logged out.'),
+                      actions: <Widget>[
+                        new FlatButton(
+                          onPressed: () {
+
+                            clearSharedPreferences();
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) =>
+                                    MyUscreenLogin()));
+                          },
+                          child: new Text('Yes'),
+                        ),
+                        new FlatButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          child: new Text('No'),
+                        ),
+                      ],
+                    );
+                  }
+              );
             },
           ),
           ListTile(
@@ -171,6 +220,18 @@ class MyDrawer extends StatelessWidget {
       ),
     );
   }
+
+  //------------------Methods--------------------
+
+  void checkSharedPreferences() async {
+
+    SharedPreferences prefSave = await SharedPreferences.getInstance();
+    _accountEmail = prefSave.get('email2');
+    _accountName = prefSave.get('userName');
+    print(_accountEmail + _accountName);
+
+  }
+
   _onTapOtherAccounts(BuildContext context) {
     _onTapOtherAccounts(BuildContext context) {
       Navigator.of(context).pop();
@@ -190,5 +251,15 @@ class MyDrawer extends StatelessWidget {
         ),
       );
     }
+  }
+
+  void setDetails() {
+    _accountName = getUserName();
+    _accountEmail = getUserEmail();
+  }
+
+  void clearSharedPreferences() async{
+    SharedPreferences prefSave = await SharedPreferences.getInstance();
+    prefSave.clear();
   }
 }

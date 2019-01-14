@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'main.dart';
+import 'home.dart';
 import 'values.dart';
 
 
@@ -18,6 +18,7 @@ class MyUscreenLogin extends StatefulWidget {
 
 class _UscreenLogin extends State<MyUscreenLogin> {
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();        //to use snakebar without scaffold
   bool _obscureText = true;
   bool tryLogin = false;
   bool createNewAccount = false;
@@ -32,8 +33,10 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     /*text: 'Pankaj Negi'*/);
   final TextEditingController controllerConfirmPassword = new TextEditingController(
     /*text: 'pnkjng88@gmail.com'*/);
-  //SharedPreferences pref = await SharedPreferences.getInstance();
 
+  _UscreenLogin(){
+    checkSharedPreferences();
+  }
 
   Widget build(BuildContext context) {
     //Something new here
@@ -52,28 +55,6 @@ class _UscreenLogin extends State<MyUscreenLogin> {
                 )
             )
         )
-    );
-
-    final userName = new Container(
-
-      height: 45.0,
-      color: Colors.white,
-
-      child: new TextFormField(
-        keyboardType: TextInputType.text,
-        controller: controllerUserName,
-        style: TextStyle(color: editTextColor(), fontSize: 15.0),
-        decoration: new InputDecoration(
-          prefixIcon: Icon(Icons.email, color: Colors.grey,),
-          hintStyle: TextStyle(color: hintColor()),
-          //hintText: 'UserName',
-          labelText: 'Email',
-          labelStyle: TextStyle(color: buttonColor()),
-          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-          border: InputBorder.none,
-          // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
-        ),
-      ),
     );
 
     final email = new Container(
@@ -139,49 +120,100 @@ class _UscreenLogin extends State<MyUscreenLogin> {
       ),
     );
 
+    //--------------------Sign Up Fields---------------------
+
+    final userName = new Container(
+
+      height: 45.0,
+      color: Colors.white,
+      alignment: Alignment.centerLeft,
+
+      child: new TextFormField(
+        keyboardType: TextInputType.text,
+        controller: controllerUserName,
+        style: TextStyle(color: editTextColor(), fontSize: 15.0),
+        decoration: new InputDecoration(
+          hintStyle: TextStyle(color: hintColor()),
+          hintText: 'User Name',
+          labelText: 'User Name',
+          labelStyle: TextStyle(color: buttonColor()),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          border: InputBorder.none,
+          // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
+        ),
+      ),
+    );
+
+    final signUpEmail = new Container(
+
+      height: 45.0,
+      color: Colors.white,
+      alignment: Alignment.centerLeft,
+
+      child: new TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        controller: controllerEmail,
+        style: TextStyle(color: editTextColor(), fontSize: 15.0),
+        decoration: new InputDecoration(
+          hintStyle: TextStyle(color: hintColor()),
+          hintText: 'Email',
+          labelText: 'Email',
+          labelStyle: TextStyle(color: buttonColor()),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          border: InputBorder.none,
+          // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
+        ),
+      ),
+    );
+
+    final signUpPassword = new Container(
+
+      height: 45.0,
+      color: Colors.white,
+      alignment: Alignment.centerLeft,
+
+      child: new TextFormField(
+        textAlign: TextAlign.left,
+        controller: controllerPassword,
+        style: TextStyle(color: editTextColor(), fontSize: 15.0),
+        obscureText: _obscureText,
+        decoration: new InputDecoration(
+          hintText:'Password',
+          hintStyle: TextStyle(color: hintColor()),
+          labelText: 'Password',
+          labelStyle: TextStyle(color: buttonColor()),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          border: InputBorder.none,
+          // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
+        ),
+      ),
+    );
+
     final confirmPassword = new Container(
 
       height: 45.0,
       color: Colors.white,
-
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Expanded(
-            flex: 6, //to adjust size
-            child: new TextFormField(
-              textAlign: TextAlign.left,
-              controller: controllerConfirmPassword,
-              style: TextStyle(color: editTextColor(), fontSize: 15.0),
-              obscureText: _obscureText,
-              decoration: new InputDecoration(
-                prefixIcon: Icon(Icons.vpn_key, color: Colors.grey,),
-                hintStyle: TextStyle(color: hintColor()),
-                labelText: 'Password',
-                labelStyle: TextStyle(color: buttonColor()),
-                contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                border: InputBorder.none,
-                // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
-              ),
-            ),
-          ),
-          Expanded(
-              flex: 1,
-              child: new IconButton(
-                icon: _obscureText ? Icon(Icons.visibility_off ,color: Colors.grey,) : Icon(
-                    Icons.visibility,
-                    color: boxBorder()),
-                onPressed: _toggle,
-                padding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
-              )
-          ),
-        ],
-
+      alignment: Alignment.centerLeft,
+      child: new TextFormField(
+        textAlign: TextAlign.left,
+        controller: controllerConfirmPassword,
+        style: TextStyle(color: editTextColor(), fontSize: 15.0),
+        obscureText: _obscureText,
+        decoration: new InputDecoration(
+          hintText: 'Confirm Password',
+          hintStyle: TextStyle(color: hintColor()),
+          labelText: 'Confirm Password',
+          labelStyle: TextStyle(color: buttonColor()),
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          border: InputBorder.none,
+          // border: OutlineInputBorder(borderSide:  BorderSide(color: Colors.blue),),     //to check size
+        ),
       ),
     );
 
     final loginButton = new RaisedButton(
       color: buttonColor(),
+
       child:
       Padding(
         padding: EdgeInsets.all(12.0),
@@ -192,10 +224,9 @@ class _UscreenLogin extends State<MyUscreenLogin> {
       onPressed: () {
         SystemChannels.textInput.invokeMethod(
             'TextInput.hide'); //to hide keyboard when clicked outside
-        setState(() {
-          tryLogin = true;
-        });
-        fetchPost();
+
+        _validateLogin();
+        //fetchPost();
         //getCatogories();
       },
 
@@ -235,29 +266,31 @@ class _UscreenLogin extends State<MyUscreenLogin> {
       onPressed: () {
         SystemChannels.textInput.invokeMethod(
             'TextInput.hide'); //to hide keyboard when clicked outside
-        _showToast('Not done yet');
+        //_showToast('Not done yet');
+        _showSignUpPage();
       },
 
     );
 
-    final signInContainer = !createNewAccount ? new Column(
+    final signInContainer = new Column(
       children: <Widget>[
         email,
         password,
       ],
-    ) : new Container();
+    );
 
-    final signUpContainer = createNewAccount ? new Column(
+    final signUpContainer =new Column(
       children: <Widget>[
         userName,
-        email,
-        password,
+        signUpEmail,
+        signUpPassword,
         confirmPassword,
       ],
-    ) : new Container();
+    );
     //
 
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomPadding: false,
       //to avoid page resizing when keyboard opens
       body: GestureDetector(
@@ -275,14 +308,13 @@ class _UscreenLogin extends State<MyUscreenLogin> {
                 padding: EdgeInsets.only(left: 24.0, right: 24.0 ,top: 50),
                 children: <Widget>[
                   logo,
-                  email,
-                  password,
+                  createNewAccount ? signUpContainer : signInContainer,
                   SizedBox(height: 16.0),
-                  loginButton,
+                  createNewAccount ? new Container() : loginButton,
                   SizedBox(height: 8.0),
                   signUpButton,
                   SizedBox(height: 8.0),
-                  forgotLabel,
+                  createNewAccount ? new Container() : forgotLabel,
                   loginApiCallOrProgressBar,
                 ],
               ),
@@ -313,10 +345,106 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     );
   }
 
+  void _showSnakeBar(String text){
+    final snackBar = SnackBar(
+      content: Text(text),
+      backgroundColor: themeColor(),
+      duration: Duration(seconds: 3),
+    );
+    // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
   void _showSignUpPage() {
     //TODO later
     //Make rest of the login widgets visibility gone.
+    if(createNewAccount)
+      {
+        //Validate inputs
+        if(controllerUserName.text.isEmpty || controllerEmail.text.isEmpty || controllerPassword.text.isEmpty || controllerConfirmPassword.text.isEmpty)
+        {
+          _showSnakeBar("Please fill all the details");
+          return;
+        }
+        
+        //To validate Email
+        RegExp emailPattern = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+        if(!emailPattern.hasMatch(controllerEmail.text)){
+          _showSnakeBar("Please enter valid Email address");
+          return;
+        }
+        
+        //To validate password
+        if(controllerPassword.text.length < 8){
+          _showSnakeBar("Please enter valid password");
+          return;
+        }
+        
+        if(controllerPassword.text != controllerConfirmPassword.text){
+
+          _showSnakeBar("Password and Confirm Password doesn't match");
+          return;
+        }
+
+        createNewAccount = false;
+        Navigator.pop(context);
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context)=> MyHomePage( title: "From Uscreen Login Page",))
+        );
+      }
+    setState(() {
+      createNewAccount = true;
+    });
   }
+
+  void _validateLogin(){
+    //Validate inputs
+    if(controllerPassword.text.isEmpty || controllerEmail.text.isEmpty)
+    {
+      _showSnakeBar("Email and Password can not be empty");
+      return;
+    }
+
+    //To validate Email
+    RegExp emailPattern = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if(!emailPattern.hasMatch(controllerEmail.text)){
+      _showSnakeBar("Please enter valid Email address");
+      return;
+    }
+
+    //To validate password
+    if(controllerPassword.text.length < 8){
+      _showSnakeBar("Please enter valid password");
+      return;
+    }
+
+    setState(() {
+      tryLogin = true;
+    });
+    //Call Login API
+    fetchPost();
+
+  }
+
+  void checkSharedPreferences() async {
+
+    SharedPreferences prefSave = await SharedPreferences.getInstance();
+    String email = prefSave.get('email2');
+    String userName = prefSave.get('userName');
+    print(email);
+    print(userName);
+    setUserEmail(email);
+    setUserName(userName);
+    if(email!= null){
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context)=> MyHomePage( title: "Direct Home Page",))
+      );
+    }
+
+  }
+
+
 
 //---------------------API------------------------
 
@@ -334,14 +462,18 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     if (response.statusCode == 200 || response.statusCode == 201 ) {
 
       SharedPreferences prefSave = await SharedPreferences.getInstance();
-      prefSave.setString('email2', controllerPassword.text);
-      prefSave.setString('password2', controllerPassword.text);
+      //prefSave.setString('email2', controllerPassword.text);
+      //prefSave.setString('password2', controllerPassword.text);
       _showToast("Successfully Login");
       print(response.body);
       final responseJson = json.decode(response.body);
       userDetails = User.fromJson(responseJson);
       //Test print
       print(userDetails.username + ' , ' + userDetails.email  + ' , ' + userDetails.token);
+      prefSave.setString('userName', userDetails.username);
+      prefSave.setString('email2', userDetails.email);
+      setUserName(userDetails.username);
+      setUserEmail(userDetails.email);
 
       //Test
       //getCatogories();
@@ -357,7 +489,7 @@ class _UscreenLogin extends State<MyUscreenLogin> {
       setState(() {
         tryLogin = false;
       });
-      throw Exception('Failed to load post');
+      //throw Exception('Failed to load post');
 
     }
   }
@@ -383,10 +515,7 @@ class _UscreenLogin extends State<MyUscreenLogin> {
       throw Exception('Failed to load post');
 
     }
-
   }
-
-
 }
 
 class User {

@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'drawerclass.dart';
-import 'main.dart';
+import 'home.dart';
 import 'values.dart'; //to hide keyboard when clicked outside
 // decode json data
 

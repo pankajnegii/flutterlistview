@@ -9,6 +9,20 @@ import 'package:flutter/material.dart';
   //myColor.themeColor();
 
 }*/
+String username = "";
+String useremail = "";
+void setUserName(String name){
+  username = name;
+}
+String getUserName(){
+  return username;
+}
+void setUserEmail(String name){
+  useremail = name;
+}
+String getUserEmail(){
+  return useremail;
+}
 
 Color themeColor() {
   return Color(0xFFFF0000);
