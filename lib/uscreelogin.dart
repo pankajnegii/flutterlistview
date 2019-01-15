@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'home.dart';
 import 'values.dart';
-
 
 class MyUscreenLogin extends StatefulWidget {
   @override
@@ -17,33 +19,36 @@ class MyUscreenLogin extends StatefulWidget {
 }
 
 class _UscreenLogin extends State<MyUscreenLogin> {
-
-  final _scaffoldKey = GlobalKey<ScaffoldState>();        //to use snakebar without scaffold
+  final _scaffoldKey =
+  GlobalKey<ScaffoldState>(); //to use snakebar without scaffold
   bool _obscureText = true;
   bool tryLogin = false;
   bool createNewAccount = false;
   Categories categories = new Categories();
-  User userDetails  = new User(username: 'DefaultName' , email: 'DefaultEmail' , token: 'DefaultToken');
+  User userDetails = new User(
+      username: 'DefaultName', email: 'DefaultEmail', token: 'DefaultToken');
+
   // String _password = "";
   final TextEditingController controllerPassword = new TextEditingController(
-      /*text: '87654321'*/); // way to get/set value of textformfield
+    /*text: '87654321'*/); // way to get/set value of textformfield
   final TextEditingController controllerEmail = new TextEditingController(
-      /*text: 'pnkjng88@gmail.com'*/);
+    /*text: 'pnkjng88@gmail.com'*/);
   final TextEditingController controllerUserName = new TextEditingController(
     /*text: 'Pankaj Negi'*/);
-  final TextEditingController controllerConfirmPassword = new TextEditingController(
+  final TextEditingController controllerConfirmPassword =
+  new TextEditingController(
     /*text: 'pnkjng88@gmail.com'*/);
 
-  _UscreenLogin(){
+  _UscreenLogin() {
     checkSharedPreferences();
   }
 
   Widget build(BuildContext context) {
     //Something new here
-    final logo = Center( //Center is also used to be able to change the container size irrespective of other childs.
+    final logo = Center(
+      //Center is also used to be able to change the container size irrespective of other childs.
         child: Container(
             margin: EdgeInsets.all(20.0),
-
             height: 200.0,
             decoration: new BoxDecoration(
               /*shape: BoxShape.rectangle,
@@ -52,22 +57,20 @@ class _UscreenLogin extends State<MyUscreenLogin> {
                 image: new DecorationImage(
                   fit: BoxFit.fill,
                   image: new AssetImage('assets/logo.png'),
-                )
-            )
-        )
-    );
+                ))));
 
     final email = new Container(
-
       height: 45.0,
       color: Colors.white,
-
       child: new TextFormField(
         keyboardType: TextInputType.emailAddress,
         controller: controllerEmail,
         style: TextStyle(color: editTextColor(), fontSize: 15.0),
         decoration: new InputDecoration(
-          prefixIcon: Icon(Icons.email, color: Colors.grey,),
+          prefixIcon: Icon(
+            Icons.email,
+            color: Colors.grey,
+          ),
           hintStyle: TextStyle(color: hintColor()),
           //hintText: 'UserName',
           labelText: 'Email',
@@ -80,10 +83,8 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     );
 
     final password = new Container(
-
       height: 45.0,
-     color: Colors.white,
-
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -95,7 +96,10 @@ class _UscreenLogin extends State<MyUscreenLogin> {
               style: TextStyle(color: editTextColor(), fontSize: 15.0),
               obscureText: _obscureText,
               decoration: new InputDecoration(
-                prefixIcon: Icon(Icons.vpn_key, color: Colors.grey,),
+                prefixIcon: Icon(
+                  Icons.vpn_key,
+                  color: Colors.grey,
+                ),
                 hintStyle: TextStyle(color: hintColor()),
                 labelText: 'Password',
                 labelStyle: TextStyle(color: buttonColor()),
@@ -108,26 +112,25 @@ class _UscreenLogin extends State<MyUscreenLogin> {
           Expanded(
               flex: 1,
               child: new IconButton(
-                icon: _obscureText ? Icon(Icons.visibility_off ,color: Colors.grey,) : Icon(
-                    Icons.visibility,
-                    color: boxBorder()),
+                icon: _obscureText
+                    ? Icon(
+                  Icons.visibility_off,
+                  color: Colors.grey,
+                )
+                    : Icon(Icons.visibility, color: boxBorder()),
                 onPressed: _toggle,
                 padding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
-              )
-          ),
+              )),
         ],
-
       ),
     );
 
     //--------------------Sign Up Fields---------------------
 
     final userName = new Container(
-
       height: 45.0,
       color: Colors.white,
       alignment: Alignment.centerLeft,
-
       child: new TextFormField(
         keyboardType: TextInputType.text,
         controller: controllerUserName,
@@ -145,11 +148,9 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     );
 
     final signUpEmail = new Container(
-
       height: 45.0,
       color: Colors.white,
       alignment: Alignment.centerLeft,
-
       child: new TextFormField(
         keyboardType: TextInputType.emailAddress,
         controller: controllerEmail,
@@ -167,18 +168,16 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     );
 
     final signUpPassword = new Container(
-
       height: 45.0,
       color: Colors.white,
       alignment: Alignment.centerLeft,
-
       child: new TextFormField(
         textAlign: TextAlign.left,
         controller: controllerPassword,
         style: TextStyle(color: editTextColor(), fontSize: 15.0),
         obscureText: _obscureText,
         decoration: new InputDecoration(
-          hintText:'Password',
+          hintText: 'Password',
           hintStyle: TextStyle(color: hintColor()),
           labelText: 'Password',
           labelStyle: TextStyle(color: buttonColor()),
@@ -190,7 +189,6 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     );
 
     final confirmPassword = new Container(
-
       height: 45.0,
       color: Colors.white,
       alignment: Alignment.centerLeft,
@@ -213,12 +211,12 @@ class _UscreenLogin extends State<MyUscreenLogin> {
 
     final loginButton = new RaisedButton(
       color: buttonColor(),
-
-      child:
-      Padding(
+      child: Padding(
         padding: EdgeInsets.all(12.0),
-        child:   Text('Sign In', style: TextStyle(color: Colors.white, fontSize: 16.0),),
-
+        child: Text(
+          'Sign In',
+          style: TextStyle(color: Colors.white, fontSize: 16.0),
+        ),
       ),
       // On login click
       onPressed: () {
@@ -229,47 +227,58 @@ class _UscreenLogin extends State<MyUscreenLogin> {
         //fetchPost();
         //getCatogories();
       },
-
     );
 
     final forgotLabel = new Container(
-        margin: EdgeInsets.only(bottom: 120.0),
-        child: new FlatButton(
-          child: Text(
-            'Forgot Password?', style: TextStyle(color: Colors.white),),
-          onPressed: () {
-            _showToast('Not done yet');
-          },
-        )
-    );
+        height: 50.0,
+        margin: EdgeInsets.only(top: 100.0),
+        //margin: EdgeInsets.only(top: 60.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              '-------------------',
+              style: TextStyle(fontSize: 30.0, color: hintColor()),
+            ),
+            Text(
+              'OR',
+              style: TextStyle(fontSize: 20.0, color: hintColor()),
+            ),
+            Text(
+              '-------------------',
+              style: TextStyle(
+                fontSize: 30.0,
+                color: hintColor(),
+              ),
+            ),
+          ],
+        ));
 
-    final loginApiCallOrProgressBar =
-    Center (
-        child:
-        SizedBox( height: 35.0,
-            child:
-            tryLogin? CircularProgressIndicator(strokeWidth: 3.0, backgroundColor: buttonColor(),) :  new Container()
-        )
-
-    ) ;
+    final loginApiCallOrProgressBar = Center(
+        child: SizedBox(
+            height: 35.0,
+            child: tryLogin
+                ? CircularProgressIndicator(
+              strokeWidth: 3.0,
+              backgroundColor: buttonColor(),
+            )
+                : new Container()));
 
     final signUpButton = new RaisedButton(
-
       color: buttonColor(),
-      child:
-      Padding(
-          padding: EdgeInsets.all(12.0),
-          child:   Text('Create New Account', style: TextStyle(color: Colors.white, fontSize: 16.0),),
-
+      child: Padding(
+        padding: EdgeInsets.all(12.0),
+        child: Text(
+          'Create New Account',
+          style: TextStyle(color: Colors.white, fontSize: 16.0),
+        ),
       ),
-
       onPressed: () {
         SystemChannels.textInput.invokeMethod(
             'TextInput.hide'); //to hide keyboard when clicked outside
         //_showToast('Not done yet');
         _showSignUpPage();
       },
-
     );
 
     final signInContainer = new Column(
@@ -279,7 +288,7 @@ class _UscreenLogin extends State<MyUscreenLogin> {
       ],
     );
 
-    final signUpContainer =new Column(
+    final signUpContainer = new Column(
       children: <Widget>[
         userName,
         signUpEmail,
@@ -289,40 +298,40 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     );
     //
 
-    return Scaffold(
-      key: _scaffoldKey,
-      resizeToAvoidBottomPadding: false,
-      //to avoid page resizing when keyboard opens
-      body: GestureDetector(
-          onTap: () {
-
-            SystemChannels.textInput.invokeMethod(
-                'TextInput.hide'); //to hide keyboard when clicked outside
-          },
-          child: new Container(
-            color: containerColor(),
-            child: Center(
-              child:
-              ListView(
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: 24.0, right: 24.0 ,top: 50),
-                children: <Widget>[
-                  logo,
-                  createNewAccount ? signUpContainer : signInContainer,
-                  SizedBox(height: 16.0),
-                  createNewAccount ? new Container() : loginButton,
-                  SizedBox(height: 8.0),
-                  signUpButton,
-                  SizedBox(height: 8.0),
-                  createNewAccount ? new Container() : forgotLabel,
-                  loginApiCallOrProgressBar,
-                ],
-              ),
-
-            ), //
-          )
-      ),
-    );
+    return WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+          key: _scaffoldKey,
+          resizeToAvoidBottomPadding: false,
+          //to avoid page resizing when keyboard opens
+          body: GestureDetector(
+              onTap: () {
+                SystemChannels.textInput.invokeMethod(
+                    'TextInput.hide'); //to hide keyboard when clicked outside
+              },
+              child: new Container(
+                color: containerColor(),
+                child: Center(
+                  child: ListView(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 50),
+                    children: <Widget>[
+                      logo,
+                      createNewAccount ? signUpContainer : signInContainer,
+                      SizedBox(height: 16.0),
+                      createNewAccount ? new Container() : loginButton,
+                      SizedBox(height: 8.0),
+                      createNewAccount ? new Container() : forgotLabel,
+                      signUpButton,
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      loginApiCallOrProgressBar,
+                    ],
+                  ),
+                ), //
+              )),
+        ));
   }
 
 //--------------Methods---------------------
@@ -345,10 +354,11 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     );
   }
 
-  void _showSnakeBar(String text){
+  void _showSnakeBar(String text) {
     final snackBar = SnackBar(
       content: Text(text),
       backgroundColor: themeColor(),
+      //
       duration: Duration(seconds: 3),
     );
     // Find the Scaffold in the Widget tree and use it to show a SnackBar!
@@ -358,62 +368,64 @@ class _UscreenLogin extends State<MyUscreenLogin> {
   void _showSignUpPage() {
     //TODO later
     //Make rest of the login widgets visibility gone.
-    if(createNewAccount)
-      {
-        //Validate inputs
-        if(controllerUserName.text.isEmpty || controllerEmail.text.isEmpty || controllerPassword.text.isEmpty || controllerConfirmPassword.text.isEmpty)
-        {
-          _showSnakeBar("Please fill all the details");
-          return;
-        }
-        
-        //To validate Email
-        RegExp emailPattern = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-        if(!emailPattern.hasMatch(controllerEmail.text)){
-          _showSnakeBar("Please enter valid Email address");
-          return;
-        }
-        
-        //To validate password
-        if(controllerPassword.text.length < 8){
-          _showSnakeBar("Please enter valid password");
-          return;
-        }
-        
-        if(controllerPassword.text != controllerConfirmPassword.text){
-
-          _showSnakeBar("Password and Confirm Password doesn't match");
-          return;
-        }
-
-        createNewAccount = false;
-        Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context)=> MyHomePage( title: "From Uscreen Login Page",))
-        );
+    if (createNewAccount) {
+      //Validate inputs
+      if (controllerUserName.text.isEmpty ||
+          controllerEmail.text.isEmpty ||
+          controllerPassword.text.isEmpty ||
+          controllerConfirmPassword.text.isEmpty) {
+        _showSnakeBar("Please fill all the details");
+        return;
       }
+
+      //To validate Email
+      RegExp emailPattern = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+      if (!emailPattern.hasMatch(controllerEmail.text)) {
+        _showSnakeBar("Please enter valid Email address");
+        return;
+      }
+
+      //To validate password
+      if (controllerPassword.text.length < 8) {
+        _showSnakeBar("Please enter valid password");
+        return;
+      }
+
+      if (controllerPassword.text != controllerConfirmPassword.text) {
+        _showSnakeBar("Password and Confirm Password doesn't match");
+        return;
+      }
+
+      createNewAccount = false;
+      Navigator.pop(context);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MyHomePage(
+                title: "From Uscreen Login Page",
+              )));
+    }
     setState(() {
       createNewAccount = true;
     });
   }
 
-  void _validateLogin(){
+  void _validateLogin() {
     //Validate inputs
-    if(controllerPassword.text.isEmpty || controllerEmail.text.isEmpty)
-    {
+    if (controllerPassword.text.isEmpty || controllerEmail.text.isEmpty) {
       _showSnakeBar("Email and Password can not be empty");
       return;
     }
 
     //To validate Email
     RegExp emailPattern = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if(!emailPattern.hasMatch(controllerEmail.text)){
+    if (!emailPattern.hasMatch(controllerEmail.text)) {
       _showSnakeBar("Please enter valid Email address");
       return;
     }
 
     //To validate password
-    if(controllerPassword.text.length < 8){
+    if (controllerPassword.text.length < 8) {
       _showSnakeBar("Please enter valid password");
       return;
     }
@@ -423,11 +435,9 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     });
     //Call Login API
     fetchPost();
-
   }
 
   void checkSharedPreferences() async {
-
     SharedPreferences prefSave = await SharedPreferences.getInstance();
     String email = prefSave.get('email2');
     String userName = prefSave.get('userName');
@@ -435,32 +445,34 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     print(userName);
     setUserEmail(email);
     setUserName(userName);
-    if(email!= null){
+    if (email != null && userName != null) {
       Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context)=> MyHomePage( title: "Direct Home Page",))
-      );
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MyHomePage(
+                title: "Direct Home Page",
+              )));
     }
-
   }
-
-
 
 //---------------------API------------------------
 
-
   //for login check
   Future<Null> fetchPost() async {
-
     //For Login Post method
-    final response =
-    await http.post('http://uscreen.io/api/v1/sessions/', headers: {'x-store-token' : 'DK/Ml+cOGvUFyQ=='},
-        body: {"email": controllerEmail.text, "password": controllerPassword.text});
+    final response = await http.post('http://uscreen.io/api/v1/sessions/',
+        headers: {
+          'x-store-token': 'DK/Ml+cOGvUFyQ=='
+        },
+        body: {
+          "email": controllerEmail.text,
+          "password": controllerPassword.text
+        });
     //print(response.statusCode);
     //print(response.headers);
     //print(response.body);
-    if (response.statusCode == 200 || response.statusCode == 201 ) {
-
+    if (response.statusCode == 200 || response.statusCode == 201) {
       SharedPreferences prefSave = await SharedPreferences.getInstance();
       //prefSave.setString('email2', controllerPassword.text);
       //prefSave.setString('password2', controllerPassword.text);
@@ -469,18 +481,21 @@ class _UscreenLogin extends State<MyUscreenLogin> {
       final responseJson = json.decode(response.body);
       userDetails = User.fromJson(responseJson);
       //Test print
-      print(userDetails.username + ' , ' + userDetails.email  + ' , ' + userDetails.token);
+      print(userDetails.username + ' , ' + userDetails.email + ' , ' + userDetails.token);
       prefSave.setString('userName', userDetails.username);
       prefSave.setString('email2', userDetails.email);
       setUserName(userDetails.username);
       setUserEmail(userDetails.email);
 
       //Test
-      //getCatogories();
+      getCatogories();
 
-       Navigator.push(context, MaterialPageRoute(
-          builder: (context) =>
-              MyHomePage(title: 'From API Login',)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MyHomePage(
+                title: 'From API Login',
+              )));
     } else {
       // If that response was not OK, throw an error.
       print(response.toString());
@@ -495,17 +510,18 @@ class _UscreenLogin extends State<MyUscreenLogin> {
   }
 
   Future<Null> getCatogories() async {
-
     //For Categories Get Method
-    final categoriesResponse = await http.get('http://uscreen.io/api/v1/categories' , headers: {'x-store-token' : 'DK/Ml+cOGvUFyQ=='} );
+    final categoriesResponse = await http.get(
+        'http://uscreen.io/api/v1/categories',
+        headers: {'x-store-token': 'DK/Ml+cOGvUFyQ=='});
     print(categoriesResponse.body);
-    if(categoriesResponse.statusCode == 200)
-    {
+    if (categoriesResponse.statusCode == 200) {
       final responseJson = json.decode(categoriesResponse.body);
       print("Get Successfully");
       var list = responseJson as List;
       print(list.runtimeType);
-      List<Categories> categoryList = list.map((i) => Categories.fromJson(i)).toList();
+      List<Categories> categoryList =
+      list.map((i) => Categories.fromJson(i)).toList();
       //Categories.fromJson(responseJson);
     } else {
       // If that response was not OK, throw an error.
@@ -513,20 +529,47 @@ class _UscreenLogin extends State<MyUscreenLogin> {
       print('Failed to load post');
       _showToast("Failed to load post");
       throw Exception('Failed to load post');
+    }
+  }
 
+  Future<bool> _onWillPop() {
+    //To close app on back key press
+    if(createNewAccount){
+      setState(() {
+        createNewAccount = false;
+      });
+    }
+    else {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return new AlertDialog(
+              title: new Text('Are you sure?'),
+              content: new Text('Your app will be closed.'),
+              actions: <Widget>[
+                new FlatButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: new Text('No'),
+                ),
+                new FlatButton(
+                  onPressed: () => exit(0), //Navigator.of(context).pop(true),
+                  child: new Text('Yes'),
+                ),
+              ],
+            );
+          }
+      ) ?? false;
     }
   }
 }
 
 class User {
+  final String token, username, email;
 
-  final String token, username, email ;
-
-
-  User({this.username, this.email , this.token});
+  User({this.username, this.email, this.token});
 
   factory User.fromJson(Map<String, dynamic> json) {
-    String _username , _email, _token;
+    String _username, _email, _token;
     _username = json['user']['name'];
     _email = json['user']['email'];
     _token = json['auth']['token'];
@@ -541,37 +584,30 @@ class User {
       textColor: Colors.white,
     );
 
-    return User(username: _username ,email: _email , token: _token);
-
+    return User(username: _username, email: _email, token: _token);
   }
 }
 
 class Categories {
-
   //TODO : Check https://github.com/PoojaB26/ParsingJSON-Flutter/blob/master/lib/model/product_model.dart
   int id;
-  final String title , image , featured ;
+  final String title, image, featured;
 
-
-  Categories({this.id, this.title , this.image , this.featured});
+  Categories({this.id, this.title, this.image, this.featured});
 
   factory Categories.fromJson(Map<String, dynamic> json) {
     //json = json['results'][0]; //only in case this json file. Else use lines something like below one
     int _id;
-    String _title, _image , _featured;
+    String _title, _image, _featured;
     _id = json['id'];
     print(_id);
     _title = json['title'];
     _image = json['image'];
     _featured = json['featured'];
-    return Categories(id: _id ,title: _title , image: _image ,featured: _featured );
-
+    return Categories(
+        id: _id, title: _title, image: _image, featured: _featured);
   }
 }
-
-
-
-
 
 /*
 

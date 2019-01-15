@@ -9,6 +9,7 @@ import 'filemanager.dart';
 import 'FlareAnimation.dart';
 import 'audioplayer.dart';
 import 'videoplayer.dart';
+import 'uscreen_player.dart';
 
 class MyHomePage extends StatelessWidget {
 
@@ -54,6 +55,15 @@ class MyHomePage extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(
                   builder: (context) =>
                       MyVideoPlayer()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.video_library),
+            title: Text('Uscreen Video Player'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyUscreenVideoPlayer()));
             },
           ),
           ListTile(
