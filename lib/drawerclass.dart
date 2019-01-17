@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
-import 'forclasses.dart';
-import 'main.dart ';
-import 'values.dart';
-import 'listbuilderpage.dart';
-import 'savingobject.dart';
-import 'bottombar.dart';
-import 'loginapi.dart';
-import 'uscreelogin.dart';
-import 'home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyDrawer extends StatelessWidget {
+import 'bottombar.dart';
+import 'forclasses.dart';
+import 'home.dart';
+import 'listbuilderpage.dart';
+import 'loginapi.dart';
+import 'savingobject.dart';
+import 'uscreelogin.dart';
+import 'uscreen_home.dart';
+import 'values.dart';
 
-  bool alreadyLogin =false;
+class MyDrawer extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return _MyDrawer();
+  }
+}
+
+class _MyDrawer extends State<MyDrawer> {
+
+  bool _showOtherListItems = false;
+  bool alreadyLogin = false;
   String _accountName = "";
   String _accountEmail = "";
 
-  static const String _AccountName = 'Pankaj Negi';
-  static const String _AccountEmail = 'test@examples.com';
+  //static const String _AccountName = 'Pankaj Negi';
+  //static const String _AccountEmail = 'test@examples.com';
 
   @override
-  MyDrawer(){
+  MyDrawer() {
     //checkSharedPreferences();
     setDetails();
   }
@@ -28,7 +38,6 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //checkSharedPreferences(context);
 
     return Drawer(
@@ -39,7 +48,7 @@ class MyDrawer extends StatelessWidget {
           // HELP From:https://engineering.classpro.in/flutter-1-navigation-drawer-routes-8b43a201251e
           //Drawee header starts
           new UserAccountsDrawerHeader(
-              decoration: new BoxDecoration(    //header box decoration
+              decoration: new BoxDecoration( //header box decoration
                 shape: BoxShape.rectangle,
                 color: drawerHeaderColor(),
               ),
@@ -62,34 +71,46 @@ class MyDrawer extends StatelessWidget {
                     label: 'Switch Account',
                     child: new CircleAvatar(
                       backgroundColor: Colors.brown,
-                      child: new Text('PJ',  style: TextStyle(color: Color(0xFFFFFFFF)),),
+                      child: new Text(
+                        'PJ', style: TextStyle(color: Color(0xFFFFFFFF)),),
                     ),
                   ),
                 )
               ]
 
-          ),    //Drawee header ends
+          ), //Drawee header ends
           //Drawer items
+
           ListTile(
             leading: Icon(Icons.home),
-            title: Text('Home'),
+            title: Text('Uscreen Home'),
             onTap: () {
               Navigator.pop(context);
-              //The MaterialPageRoute is handy because it transitions to the new screen using a platform-specific animation.
               Navigator.push(context, MaterialPageRoute(
                   builder: (context) =>
-                      MyHomePage(
-                          title : 'Basic List')));
+                      MyUscreenHome()));
             },
           ),
           ListTile(
-            leading: Icon(Icons.tab),
-            title: Text('TabBar Page'),
+            leading: Icon(Icons.account_box),
+            title: Text('Uscreen Login'),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(context, MaterialPageRoute(
                   builder: (context) =>
-                      TabBarPage()));
+                      MyUscreenLogin()));
+            },
+          ),
+
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text('Favorite'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      FavoratePage(
+                          receivedtext: 'Text From Favorite menu click')));
             },
           ),
           ListTile(
@@ -106,7 +127,6 @@ class MyDrawer extends StatelessWidget {
                       actions: <Widget>[
                         new FlatButton(
                           onPressed: () {
-
                             clearSharedPreferences();
                             Navigator.push(context, MaterialPageRoute(
                                 builder: (context) =>
@@ -125,6 +145,40 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            trailing: Icon(
+              Icons.arrow_drop_down, size: 40.0, color: themeColor(),),
+            contentPadding: EdgeInsets.only(left: 50.0, right: 50.0),
+            title: Text(
+              'Show Other Pages', style: TextStyle(color: themeColor()),),
+            onTap: () {
+              setState(() {
+                _showOtherListItems = !_showOtherListItems;
+              });
+            },
+          ),
+          _showOtherListItems ? ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+            onTap: () {
+              Navigator.pop(context);
+              //The MaterialPageRoute is handy because it transitions to the new screen using a platform-specific animation.
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyHomePage(
+                          title: 'Basic List')));
+            },
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
+            leading: Icon(Icons.tab),
+            title: Text('TabBar Page'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      TabBarPage()));
+            },
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.search),
             title: Text('Swipe to refresh page image'),
             onTap: () {
@@ -133,8 +187,8 @@ class MyDrawer extends StatelessWidget {
                   builder: (context) =>
                       SwipeToRefreshExample()));
             },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.pages),
             title: Text('Swipe to refresh page list'),
             onTap: () {
@@ -143,19 +197,8 @@ class MyDrawer extends StatelessWidget {
                   builder: (context) =>
                       SwipeToRefreshList()));
             },
-          ),
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('Favorite'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) =>
-                      FavoratePage(
-                          receivedtext: 'Text From Favorite menu click')));
-            },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.account_box),
             title: Text('Login Page'),
             onTap: () {
@@ -164,8 +207,8 @@ class MyDrawer extends StatelessWidget {
                   builder: (context) =>
                       MyLoginPage()));
             },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.account_box),
             title: Text('Login Page with API'),
             onTap: () {
@@ -174,18 +217,8 @@ class MyDrawer extends StatelessWidget {
                   builder: (context) =>
                       MyLoginPageAPI()));
             },
-          ),
-          ListTile(
-            leading: Icon(Icons.email),
-            title: Text('Uscreen Login'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) =>
-                      MyUscreenLogin()));
-            },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.power_settings_new),
             title: Text('RecyclerLike'),
             onTap: () {
@@ -194,8 +227,8 @@ class MyDrawer extends StatelessWidget {
                   builder: (context) =>
                       MyListBuilder()));
             },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.save),
             title: Text('Saving List'),
             onTap: () {
@@ -204,8 +237,8 @@ class MyDrawer extends StatelessWidget {
                   builder: (context) =>
                       MySavingObject()));
             },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.tablet),
             title: Text('Bottom Navigation'),
             onTap: () {
@@ -214,8 +247,7 @@ class MyDrawer extends StatelessWidget {
                   builder: (context) =>
                       MyBottomBar()));
             },
-          ),
-
+          ) : new Container(),
         ],
       ),
     );
@@ -224,12 +256,10 @@ class MyDrawer extends StatelessWidget {
   //------------------Methods--------------------
 
   void checkSharedPreferences() async {
-
     SharedPreferences prefSave = await SharedPreferences.getInstance();
     _accountEmail = prefSave.get('email2');
     _accountName = prefSave.get('userName');
     print(_accountEmail + _accountName);
-
   }
 
   _onTapOtherAccounts(BuildContext context) {
@@ -258,7 +288,7 @@ class MyDrawer extends StatelessWidget {
     _accountEmail = getUserEmail();
   }
 
-  void clearSharedPreferences() async{
+  void clearSharedPreferences() async {
     SharedPreferences prefSave = await SharedPreferences.getInstance();
     prefSave.clear();
   }

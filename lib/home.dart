@@ -10,14 +10,28 @@ import 'FlareAnimation.dart';
 import 'audioplayer.dart';
 import 'videoplayer.dart';
 import 'uscreen_player.dart';
+import 'uscreen_detail_mobile.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
 
   final String title;
+
+  MyHomePage({this.title}) ;
+
+  @override
+  State<StatefulWidget> createState() {
+    return _HomePage(newTitle: title);
+  }
+}
+
+class _HomePage extends State<MyHomePage> {
+
+  final String newTitle;
+  bool _showOtherListItems = false;
   /* final TextStyle _biggerfont = const TextStyle(
       fontSize: 18.0); //Not in use inside header*/
   //Drawer drawer = new Drawer()
-  MyHomePage({Key key, this.title}) : super(key: key);
+  _HomePage({this.newTitle}) ;
 
   @override
   Widget build(BuildContext context) {
@@ -28,35 +42,12 @@ class MyHomePage extends StatelessWidget {
       drawer: MyDrawer(),
 
       appBar: AppBar(
-        title: Text(title),
+        title: Text(newTitle),
         // backgroundColor: appBarColor(),
       ),
       body:
       ListView(
         children: <Widget>[
-          ListTile(
-            leading: Icon(Icons.save),
-            title: Text('Save Shared Preferences'),
-            onTap: _saveSharedPreferences,
-          ),
-          ListTile(
-            leading: Icon(Icons.audiotrack),
-            title: Text('Play Audio'),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) =>
-                      MyAudioPlayer()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.music_video),
-            title: Text('Play Video'),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) =>
-                      MyVideoPlayer()));
-            },
-          ),
           ListTile(
             leading: Icon(Icons.video_library),
             title: Text('Uscreen Video Player'),
@@ -67,6 +58,56 @@ class MyHomePage extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Icon(Icons.verified_user),
+            title: Text('Chapter Details Page'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyUscreenDetailMobile()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.arrow_drop_down , size: 40.0 , color: themeColor(),),
+            title: Text('Show Other Pages' , style: TextStyle(color: themeColor()),),
+            onTap: () {
+              setState(() {
+                _showOtherListItems = !_showOtherListItems;
+              });
+            },
+          ),
+          _showOtherListItems ? ListTile(
+            leading: Icon(Icons.save),
+            title: Text('Save Shared Preferences'),
+            onTap: _saveSharedPreferences,
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
+            leading: Icon(Icons.audiotrack),
+            title: Text('Play Audio'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyAudioPlayer()));
+            },
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
+            leading: Icon(Icons.music_video),
+            title: Text('Play Video'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyVideoPlayer()));
+            },
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
+            leading: Icon(Icons.video_library),
+            title: Text('Uscreen Video Player'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) =>
+                      MyUscreenVideoPlayer()));
+            },
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.sd_storage),
             title: Text('File Manager'),
             onTap: () {
@@ -74,12 +115,12 @@ class MyHomePage extends StatelessWidget {
                   builder: (context) =>
                       MyFileManager()));
             },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.add_a_photo),
             title: Text('Photo'),
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.games),
             title: Text('Animations'),
             onTap: () {
@@ -87,8 +128,8 @@ class MyHomePage extends StatelessWidget {
                   builder: (context) =>
                       MyFlareAnimation()));
             },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.tablet),
             title: Text('Animated Bottom Tab Bar'),
             onTap: () {
@@ -96,15 +137,15 @@ class MyHomePage extends StatelessWidget {
                   builder: (context) =>
                       MyAnimatedTabBar()));
             },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.add_alert),
             title: Text('Alert Box'),
             onTap: () {
               _showDialog(context);
             },
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
               leading: Icon(Icons.local_bar),
               title: Text('Snake Bar'),
               onTap: () {
@@ -120,7 +161,8 @@ class MyHomePage extends StatelessWidget {
                 // Find the Scaffold in the Widget tree and use it to show a SnackBar!
                 Scaffold.of(context).showSnackBar(snackBar);
               }
-          ), ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
               leading: Icon(Icons.open_in_new),
               title: Text('Toast'),
               onTap: () {
@@ -133,8 +175,8 @@ class MyHomePage extends StatelessWidget {
                   textColor: Colors.white,
                 );
               }
-          ),
-          ListTile(
+          ) : new Container(),
+          _showOtherListItems ? ListTile(
             leading: Icon(Icons.camera),
             title: Text('Camera'),
             onTap: (){
@@ -142,7 +184,7 @@ class MyHomePage extends StatelessWidget {
                   builder: (context) =>
                       MyCameraPage()));
             },
-          ),
+          ) : new Container(),
         ],
       ),      //End : Listview
     );      //End : Scaffold

@@ -54,7 +54,7 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
       keyboardType: TextInputType.emailAddress,
       //autofocus: false,
       controller: controllerEmail,
-      style: TextStyle(color: editTextColor(), fontSize: 15.0),
+      style: TextStyle(color: Colors.white, fontSize: 15.0),
       //initialValue: 'test@examples.com',
       decoration: new InputDecoration(
         prefixIcon: Icon(Icons.email, color: Colors.white,),
@@ -97,7 +97,7 @@ class _LoginPageAPI extends State<MyLoginPageAPI> {
               // onFieldSubmitted: focusNode.unfocus(),
               textAlign: TextAlign.left,
               controller: controllerPassword,
-              style: TextStyle(color: editTextColor(), fontSize: 15.0),
+              style: TextStyle(color: Colors.white, fontSize: 15.0),
               // validator: (val) => val.length < 6 ? 'Password too short.' : null,
               // onSaved: (val) => _password = val,
               obscureText: _obscureText,

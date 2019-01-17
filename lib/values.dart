@@ -24,6 +24,14 @@ String getUserEmail(){
   return useremail;
 }
 
+String getChapterTitle(){
+  return 'Dirt Knights Season 1';
+}
+
+String getChaptorDetails(){
+  return 'The first ever season of Dirt Knights features drivers Corey Dripps, Ryan Gustin, Al Hejna, Mike Spaulding, Jon Tesch, and Derek Ramirez as they travel across the midwest on the United States Modified Touring Series (USMTS) circuit.';
+}
+
 Color themeColor() {
   return Color(0xFFFF0000);
 }
@@ -58,6 +66,10 @@ Color greenColor(){
 }
 Color pageBackground(){
   return Color(0xFF1D1D1D);
+}
+
+Color transparentBlack(){
+  return Color(0xFF000000);
 }
 
 Color transparent(){
