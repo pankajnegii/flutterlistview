@@ -13,12 +13,15 @@ String username = "";
 String useremail = "";
 void setUserName(String name){
   username = name;
+  print(username);
 }
 String getUserName(){
   return username;
 }
 void setUserEmail(String name){
   useremail = name;
+  print(useremail);
+
 }
 String getUserEmail(){
   return useremail;

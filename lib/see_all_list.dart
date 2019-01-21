@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'drawerclass.dart';
 import 'values.dart';
 import 'uscreen_detail_mobile.dart';
-import 'see_all_list.dart';
 
-class MyUscreenHome extends StatefulWidget {
+class MySeeAllList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _UscreenHome();
+    return _SeeAllList();
   }
 }
 
-class _UscreenHome extends State<MyUscreenHome> {
+class _SeeAllList extends State<MySeeAllList> {
 
   bool contentReady = false;
   bool favorite = false;
@@ -117,9 +116,6 @@ class _UscreenHome extends State<MyUscreenHome> {
 
   void startDownload() {
     //TODO
-    Navigator.push(context, MaterialPageRoute(
-        builder: (context) =>
-            MySeeAllList()));
   }
 
   void favoriteButton() {

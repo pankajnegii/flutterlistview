@@ -237,7 +237,7 @@ class _UscreenLogin extends State<MyUscreenLogin> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              '-------------------',
+              '----------------',
               style: TextStyle(fontSize: 30.0, color: hintColor()),
             ),
             Text(
@@ -245,7 +245,7 @@ class _UscreenLogin extends State<MyUscreenLogin> {
               style: TextStyle(fontSize: 20.0, color: hintColor()),
             ),
             Text(
-              '-------------------',
+              '----------------',
               style: TextStyle(
                 fontSize: 30.0,
                 color: hintColor(),
@@ -314,7 +314,7 @@ class _UscreenLogin extends State<MyUscreenLogin> {
                 child: Center(
                   child: ListView(
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 50),
+                    padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 30),
                     children: <Widget>[
                       logo,
                       createNewAccount ? signUpContainer : signInContainer,
@@ -460,10 +460,10 @@ class _UscreenLogin extends State<MyUscreenLogin> {
 
   //for login check
   Future<Null> fetchPost() async {
-    //For Login Post method
+    //For Login Post method    api : DK/Ml+cOGvUFyQ== //bodyharmonics
     final response = await http.post('http://uscreen.io/api/v1/sessions/',
         headers: {
-          'x-store-token': 'DK/Ml+cOGvUFyQ=='
+          'x-store-token': '5msj4Bq+Vdhr0g=='
         },
         body: {
           "email": controllerEmail.text,
@@ -513,7 +513,7 @@ class _UscreenLogin extends State<MyUscreenLogin> {
     //For Categories Get Method
     final categoriesResponse = await http.get(
         'http://uscreen.io/api/v1/categories',
-        headers: {'x-store-token': 'DK/Ml+cOGvUFyQ=='});
+        headers: {'x-store-token': '5msj4Bq+Vdhr0g=='});
     print(categoriesResponse.body);
     if (categoriesResponse.statusCode == 200) {
       final responseJson = json.decode(categoriesResponse.body);

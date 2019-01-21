@@ -30,7 +30,7 @@ class _MyDrawer extends State<MyDrawer> {
   //static const String _AccountEmail = 'test@examples.com';
 
   @override
-  MyDrawer() {
+  _MyDrawer() {
     //checkSharedPreferences();
     setDetails();
   }
