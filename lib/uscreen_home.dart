@@ -78,8 +78,6 @@ class _UscreenHome extends State<MyUscreenHome> {
     favorite = !favorite;
   }
 
-  //---------------API--------------
-
 //--------------Methods---------------------
 
   void _showToast(String text) {
@@ -93,6 +91,8 @@ class _UscreenHome extends State<MyUscreenHome> {
     );
   }
 
+  //---------------API--------------
+  
   Future<Null> getCatogories() async {
     //For Categories Get Method
     final categoriesResponse = await http.get(
@@ -186,10 +186,17 @@ class MyCategoryList extends StatefulWidget {
 
 class _CategoryList extends State<MyCategoryList> {
 
+  bool isChapterListLoaded = false;
   Categories _current_catergory;
   bool favorite = false;
+  List<Chapter> chapterList;
 
-  _CategoryList(this._current_catergory);
+  _CategoryList(this._current_catergory){
+
+    //TODO Test
+    getChapter(_current_catergory.id);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +212,9 @@ class _CategoryList extends State<MyCategoryList> {
             color: transparentBlack(),
             child: new Text('See All',
               style: TextStyle(fontSize: 18.0, color: themeColor()),),
-            onPressed: () {},
+            onPressed: () {
+              _showToast("Not Done");
+            },
 
           ),
 
@@ -214,11 +223,12 @@ class _CategoryList extends State<MyCategoryList> {
 
     );
 
-    final chapterList = new Container( //In column , ListView.builder must be inside Expanded Help : https://stackoverflow.com/questions/50794021/flutter-listview-builder-in-scrollable-column-with-other-widgets
+    //TODO load chapter list
+    final chapterListContainer = new Container( //In column , ListView.builder must be inside Expanded Help : https://stackoverflow.com/questions/50794021/flutter-listview-builder-in-scrollable-column-with-other-widgets
       height: 200,
       child: ListView.builder(
 
-        itemCount: 20,
+        itemCount: chapterList.length ,
         //physics: ,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, position) {
@@ -227,14 +237,58 @@ class _CategoryList extends State<MyCategoryList> {
       ),
     );
 
-    return new Column(
+    return isChapterListLoaded ? new Column(
       children: <Widget>[
         categoryTitle,
-        chapterList,
+        chapterListContainer,
         SizedBox(height: 8.0,),
       ],
+    ) : new Container();
+  }
+
+  //--------------Methods---------------------
+
+  void _showToast(String text) {
+    Fluttertoast.showToast(
+      msg: "Result : " + text,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIos: 1,
+
+      backgroundColor: Color(0xFFFF0000),
+      textColor: Colors.white,
     );
   }
+
+  Future<Null> getChapter(int id) async{
+    //For Categories Get Method
+    final chapterResponse = await http.get(
+        'http://uscreen.io/api/v1/categories/$id/programs?skip_chapters=true&page=1&per_page=5',
+        headers: {'x-store-token': '5msj4Bq+Vdhr0g=='});
+    print(chapterResponse.body);
+    if (chapterResponse.statusCode == 200) {
+      final responseJson = json.decode(chapterResponse.body);
+      print("Get Successfully");
+      var list = responseJson as List;
+      print(list.runtimeType);
+      chapterList = list.map((i) => Chapter.fromJson(i)).toList();
+      print(chapterList.length);
+      if (chapterList.length != null) {
+        setState(() {
+          isChapterListLoaded = true;
+        });
+      }
+      //Categories.fromJson(responseJson);
+    } else {
+      // If that response was not OK, throw an error.
+      print(chapterResponse.toString());
+      print('Failed to load post');
+      _showToast("Failed to load post");
+      throw Exception('Failed to load post');
+    }
+  }
+
+
 }
 
 class Categories {
@@ -254,6 +308,28 @@ class Categories {
     _image = json['image'];
     _featured = json['featured'];
     return Categories(
+        id: _id, title: _title, image: _image, featured: _featured);
+  }
+}
+
+class Chapter {
+  //TODO : Check https://github.com/PoojaB26/ParsingJSON-Flutter/blob/master/lib/model/product_model.dart
+  int id , chapters_count;
+  final String title, image, featured , horizontal_preview , description;
+  bool has_access;
+  Chapter({this.id, this.title, this.image, this.featured, this.horizontal_preview , this.description , this.chapters_count});
+
+  factory Chapter.fromJson(Map<String, dynamic> json) {
+    //json = json['results'][0]; //only in case this json file. Else use lines something like below one
+    int _id;
+    String _title, _image, _featured , _horizontal_preview , _description;
+    bool _has_access;
+    _id = json['id'];
+    print(_id);
+    _title = json['title'];
+    _image = json['image'];
+    _featured = json['featured'];
+    return Chapter(
         id: _id, title: _title, image: _image, featured: _featured);
   }
 }
