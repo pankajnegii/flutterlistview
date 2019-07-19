@@ -25,6 +25,34 @@ class _UscreenVideoPlayer extends State<MyUscreenVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
+
+    final chewieController =  ChewieController(
+      videoPlayerController : _controller,
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      looping: true,
+      //fullScreenByDefault: true,
+
+      //showControls: false,
+      materialProgressColors: new ChewieProgressColors(
+        playedColor: Colors.red,
+        //seekbar completed duration color
+        handleColor: Colors.blue,
+        //seekbar handle color
+        backgroundColor: Colors.grey,
+        //seekbar remaining duration color
+        bufferedColor: Colors.lightGreen,
+      ),
+      placeholder: new Container(
+        color: Colors.grey, //video container color
+      ),
+      autoInitialize: true,
+    );
+
+    final playerWidget = Chewie(
+      controller: chewieController,
+    );
+
     return Scaffold(
       drawer: MyDrawer(),
       appBar: AppBar(
@@ -37,28 +65,7 @@ class _UscreenVideoPlayer extends State<MyUscreenVideoPlayer> {
         children: <Widget>[
           new Expanded(
             child: new Center(
-              child: isFileLoaded ? new Chewie(
-                _controller,
-                aspectRatio: 16 / 9,
-                autoPlay: true,
-                looping: true,
-                //fullScreenByDefault: true,
-
-                //showControls: false,
-                materialProgressColors: new ChewieProgressColors(
-                  playedColor: Colors.red,
-                  //seekbar completed duration color
-                  handleColor: Colors.blue,
-                  //seekbar handle color
-                  backgroundColor: Colors.grey,
-                  //seekbar remaining duration color
-                  bufferedColor: Colors.lightGreen,
-                ),
-                placeholder: new Container(
-                  color: Colors.grey, //video container color
-                ),
-                autoInitialize: true,
-              ) : new Container(),
+              child: Container(child: isFileLoaded ? playerWidget : new Container()),
             ),
           ),
         ],
