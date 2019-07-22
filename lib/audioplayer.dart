@@ -87,7 +87,9 @@ class _AudioPlayers extends State<MyAudioPlayer> {
   }
 
   Future<int> playLocal() async {
-    int result = await audioPlayer.play(_filePath, isLocal: true);
+    if(_filePathReceived) {
+      int result = await audioPlayer.play(_filePath, isLocal: true);
+    }
    //String
     /*if (result == 1) {
       //On  success
@@ -95,6 +97,18 @@ class _AudioPlayers extends State<MyAudioPlayer> {
     }
     return result;*/
   }
+
+  @override
+  void dispose() {          //called when class getting closed
+    if (audioPlayer != null) {
+      audioPlayer.stop();
+      print("disposed is called");
+      audioPlayer.dispose();
+    }
+    super.dispose();
+  }
+
 }
+
 
 

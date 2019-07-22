@@ -39,6 +39,10 @@ Color themeColor() {
   return Color(0xFFFF0000);
 }
 
+Color lightThemeColor(){
+  return Color(0xFFFF2F2F);
+}
+
 Color drawerHeaderColor() {
   return themeColor();
 }
