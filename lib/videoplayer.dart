@@ -120,6 +120,7 @@ class _VideoPlayer extends State<MyVideoPlayer> {
 
   void volumeUp() {
     if (_controller != null) {
+      //if(_controller. > Duration(minutes: 15))
       print(_controller.seekTo(Duration(minutes: 10)));
       _controller.seekTo(Duration(minutes: 10));
       _controller.setVolume(0.9);

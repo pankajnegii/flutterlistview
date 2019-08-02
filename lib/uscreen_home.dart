@@ -107,6 +107,7 @@ class _UscreenHome extends State<MyUscreenHome> {
       categoryList = list.map((i) => Categories.fromJson(i)).toList();
       print(categoryList.length);
       if (categoryList.length != null) {
+        print(categoryList);
         setState(() {
           isCategoryListLoaded = true;
         });
@@ -261,7 +262,7 @@ class _CategoryList extends State<MyCategoryList> {
   }
 
   Future<Null> getChapter(int id) async{
-    //For Categories Get Method
+    //For Categories Get Method For dirt knights
     final chapterResponse = await http.get(
         'http://uscreen.io/api/v1/categories/$id/programs?skip_chapters=true&page=1&per_page=5',
         headers: {'x-store-token': '5msj4Bq+Vdhr0g=='});
@@ -271,6 +272,7 @@ class _CategoryList extends State<MyCategoryList> {
       print("Get Successfully");
       var list = responseJson as List;
       print(list.runtimeType);
+      chapterList = list.map((i) => Chapter.fromJson(i)).toList();
       chapterList = list.map((i) => Chapter.fromJson(i)).toList();
       print(chapterList.length);
       if (chapterList.length != null) {
@@ -294,14 +296,16 @@ class _CategoryList extends State<MyCategoryList> {
 class Categories {
   //TODO : Check https://github.com/PoojaB26/ParsingJSON-Flutter/blob/master/lib/model/product_model.dart
   int id;
-  final String title, image, featured;
+  final String title, image;
+  final bool featured;
 
   Categories({this.id, this.title, this.image, this.featured});
 
   factory Categories.fromJson(Map<String, dynamic> json) {
     //json = json['results'][0]; //only in case this json file. Else use lines something like below one
     int _id;
-    String _title, _image, _featured;
+    String _title, _image;
+    bool _featured;
     _id = json['id'];
     print(_id);
     _title = json['title'];
